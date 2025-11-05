@@ -1,3 +1,3 @@
--- assets/notebooks/transform_data.sql
+-- assets/notebooks/query.sql
 CREATE OR REPLACE TABLE default.date_table AS
-SELECT current_date() AS currunt_date;
+SELECT current_date() AS current_date;

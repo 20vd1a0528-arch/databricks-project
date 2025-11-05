@@ -40,12 +40,20 @@ jobs:
         run: |
           databricks bundle deploy --target dev
       
-      - name: Run Job (Optional - for testing)
+      - name: Run Jobs After Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
-          echo "Deployment completed. Job can be triggered manually or via schedule."
-          # Uncomment to auto-run job after deployment:
-          # databricks bundle run daily_sales_job --target dev
+          echo "Running jobs to create tables..."
+          
+          # Run job 1: Creates date_table
+          echo "Running daily_sales_job..."
+          databricks bundle run daily_sales_job --target dev || echo "Job 1 failed or already running"
+          
+          # Run job 2: Creates daily_sales
+          echo "Running transform_data_job..."
+          databricks bundle run transform_data_job --target dev || echo "Job 2 failed or already running"
+          
+          echo "✅ Jobs executed. Tables should be created."

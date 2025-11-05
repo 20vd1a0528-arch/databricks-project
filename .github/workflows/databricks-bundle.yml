@@ -22,26 +22,29 @@ jobs:
       
       - name: Install Databricks CLI
         run: |
-          pip install databricks-cli
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+          echo "$HOME/.databricks/bin" >> $GITHUB_PATH
       
-      - name: Configure Databricks Authentication
+      - name: Validate Bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: |
-          databricks configure --host $DATABRICKS_HOST --token $DATABRICKS_TOKEN --profile DEFAULT
-      
-      - name: Validate Bundle
         run: |
           databricks bundle validate --target dev
       
       - name: Deploy Bundle to Dev
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           databricks bundle deploy --target dev
       
       - name: Run Job (Optional - for testing)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: |
           echo "Deployment completed. Job can be triggered manually or via schedule."
           # Uncomment to auto-run job after deployment:

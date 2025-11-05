@@ -1,4 +1,3 @@
-
 bundle:
   name: databricks-project
 
@@ -11,5 +10,18 @@ environments:
   prod:
     workspace:
       host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
-    # resources:
-    #   jobs: assets/workflows/job.yml
+      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/sql_automation_bundle_prod
+
+resources:
+  jobs:
+    daily_sales_job:
+      name: "Daily Sales Job (SQL Warehouse)"
+      tasks:
+        - task_key: run_transform
+          sql_task:
+            file:
+              path: ./assets/notebooks/transform_data.sql
+            warehouse_id: "f68b5a932e3471dc"
+      # schedule:
+      #   quartz_cron_expression: "0 0 6 ? * *"  # every day at 6 AM UTC (11:30 AM IST)
+      #   timezone_id: "Asia/Kolkata"

@@ -5,9 +5,9 @@ resources:
       tasks:
         - task_key: run_transform
           sql_task:
-            query:
-              file: ./assets/notebooks/transform_data.sql
-            warehouse_id: "/sql-warehouses?o=4019182261101671&page=1&page_size=20"
+            file:
+              path: ./assets/notebooks/transform_data.sql
+            warehouse_id: "f68b5a932e3471dc"
       # schedule:
       #   quartz_cron_expression: "0 30 20 ? * *"  # every day at 2 AM IST
       #   timezone_id: "Asia/Kolkata"

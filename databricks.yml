@@ -49,4 +49,4 @@ resources:
             notebook_path: ./assets/notebooks/create_employees_table.py
           # Replace with your serverless compute cluster ID
           # Get it from: Databricks UI → Compute → Your Serverless Cluster
-          existing_cluster_id: "YOUR_SERVERLESS_CLUSTER_ID_HERE"
+          existing_cluster_id: "f68b5a932e3471dc"

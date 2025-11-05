@@ -37,16 +37,13 @@ resources:
     #           path: ./assets/notebooks/transform_data.sql
     #         warehouse_id: "f68b5a932e3471dc"
     
-    # Job 3: Python job - Creates table using Python/Spark
-    # Note: Workspace only supports serverless compute
-    # You need to create a serverless compute cluster first and use its ID
-    # OR convert to SQL task (see SERVERLESS_COMPUTE_GUIDE.md)
+    # Job 3: Creates employees table using SQL
+    # Using SQL task with SQL warehouse (works with serverless workspaces)
     employees_job:
       name: "Employees Table Creation Job"
       tasks:
         - task_key: create_employees_table
-          notebook_task:
-            notebook_path: ./assets/notebooks/create_employees_table.py
-          # Replace with your serverless compute cluster ID
-          # Get it from: Databricks UI → Compute → Your Serverless Cluster
-          existing_cluster_id: "f68b5a932e3471dc"
+          sql_task:
+            file:
+              path: ./assets/notebooks/create_employees.sql
+            warehouse_id: "f68b5a932e3471dc"

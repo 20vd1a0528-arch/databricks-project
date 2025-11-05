@@ -1,0 +1,15 @@
+
+bundle:
+  name: databricks-project
+
+environments:
+  dev:
+    workspace:
+      host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
+      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/sql_automation_bundle
+
+  prod:
+    workspace:
+      host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
+    # resources:
+    #   jobs: assets/workflows/job.yml

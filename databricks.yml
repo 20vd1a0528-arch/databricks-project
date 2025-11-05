@@ -14,14 +14,25 @@ environments:
 
 resources:
   jobs:
+    # Job 1: Uses query.sql (creates date_table)
     daily_sales_job:
       name: "Daily Sales Job (SQL Warehouse)"
       tasks:
         - task_key: run_transform
           sql_task:
             file:
-              path: ./assets/notebooks/transform_data.sql
+              path: ./assets/notebooks/query.sql
             warehouse_id: "f68b5a932e3471dc"
       # schedule:
       #   quartz_cron_expression: "0 0 6 ? * *"  # every day at 6 AM UTC (11:30 AM IST)
       #   timezone_id: "Asia/Kolkata"
+    
+    # Job 2: Uses transform_data.sql (creates daily_sales)
+    transform_data_job:
+      name: "Transform Data Job"
+      tasks:
+        - task_key: run_transform
+          sql_task:
+            file:
+              path: ./assets/notebooks/transform_data.sql
+            warehouse_id: "f68b5a932e3471dc"

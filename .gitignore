@@ -31,3 +31,9 @@ Thumbs.db
 .env
 .env.local
 
+# Tokens and secrets
+tokens
+*secret*
+*password*
+*credential*
+

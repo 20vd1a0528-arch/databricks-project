@@ -44,5 +44,13 @@ resources:
       tasks:
         - task_key: create_employees_table
           notebook_task:
-            notebook_path: ./assets/notebooks/create_table_employees
-          warehouse_id: "f68b5a932e3471dc"
+            notebook_path: ./assets/notebooks/create_employees_table.py
+          new_cluster:
+            spark_version: "13.3.x-scala2.12"
+            node_type_id: "i3.xlarge"
+            num_workers: 1
+            spark_conf:
+              "spark.databricks.cluster.profile": "singleNode"
+              "spark.master": "local[*]"
+            custom_tags:
+              ResourceClass: "SingleNode"

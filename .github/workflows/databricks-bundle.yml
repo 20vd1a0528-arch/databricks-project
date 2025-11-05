@@ -48,12 +48,12 @@ jobs:
         run: |
           echo "Running jobs to create tables..."
           
-          # Run job 1: Creates date_table
-          echo "Running daily_sales_job..."
-          databricks bundle run daily_sales_job --target dev || echo "Job 1 failed or already running"
+          # Run job 1: Creates employees table
+          echo "Running employees_job..."
+          databricks bundle run employees_job --target dev || echo "Job 1 failed or already running"
           
-          # Run job 2: Creates daily_sales
-          echo "Running transform_data_job..."
-          databricks bundle run transform_data_job --target dev || echo "Job 2 failed or already running"
+          # # Run job 2: Creates daily_sales
+          # echo "Running transform_data_job..."
+          # databricks bundle run transform_data_job --target dev || echo "Job 2 failed or already running"
           
-          echo "✅ Jobs executed. Tables should be created."
+          echo "Jobs executed. Tables should be created."

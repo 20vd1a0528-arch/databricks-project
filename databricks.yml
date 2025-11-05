@@ -5,12 +5,12 @@ environments:
   dev:
     workspace:
       host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
-      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/sql_automation_bundle
+      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/notebooks_bundle
 
   prod:
     workspace:
       host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
-      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/sql_automation_bundle_prod
+      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/notebooks_bundle_prod
 
 resources:
   jobs:

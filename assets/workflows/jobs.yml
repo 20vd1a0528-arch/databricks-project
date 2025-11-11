@@ -1,12 +1,12 @@
 resources:
   jobs:
     daily_sales_job:
-      name: "Daily Sales Job (SQL Warehouse)"
+      name: "Employees Table Creation Job"
       tasks:
-        - task_key: run_transform
+        - task_key: create_employees_table
           sql_task:
             file:
-              path: ./assets/notebooks/transform_data.sql
+              path: ./assets/notebooks/create_employees.sql
             warehouse_id: "f68b5a932e3471dc"
       # schedule:
       #   quartz_cron_expression: "0 30 20 ? * *"  # every day at 2 AM IST

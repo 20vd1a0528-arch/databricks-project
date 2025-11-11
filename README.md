@@ -1,22 +1,25 @@
-# Databricks SQL Automation using Asset Bundles
+# Databricks Asset Bundle Project
 
-This project automates SQL transformations using Databricks Asset Bundles with CI/CD integration via GitHub Actions.
+This project automates SQL transformations and table creation using Databricks Asset Bundles with CI/CD integration via GitHub Actions.
 
 ## Project Structure
 
 ```
 databricks-project/
+├── databricks.yml              # Main bundle configuration
 ├── assets/
 │   ├── notebooks/
-│   │   └── transform_data.sql      # SQL transformation query
+│   │   ├── create_employees.sql        # Creates employees table
+│   │   ├── create_employees_table.py   # Python notebook for employees table
+│   │   ├── query.sql                   # Creates date_table
+│   │   └── transform_data.sql          # Creates daily_sales and date_table
 │   ├── workflows/
-│   │   └── jobs.yml                 # Job definitions
+│   │   └── jobs.yml                    # Additional job definitions
 │   └── libraries/
-│       └── requirements.txt         # Python dependencies
-├── .github/
-│   └── workflows/
-│       └── databricks-bundle.yml    # GitHub Actions CI/CD
-├── databricks.yml                   # Main bundle configuration
+│       └── requirements.txt             # Python dependencies
+├── ci/
+│   └── github-actions.yml              # GitHub Actions CI/CD workflow
+├── tests/                               # Test directory (for future test files)
 └── README.md
 ```
 
@@ -24,9 +27,15 @@ databricks-project/
 
 ### Prerequisites
 
-1. Databricks CLI installed and authenticated
-2. GitHub repository with secrets configured
-3. Access to Databricks workspace with SQL warehouse
+1. **Databricks CLI** installed and authenticated
+   ```bash
+   pip install databricks-cli
+   databricks configure --token
+   ```
+
+2. **GitHub repository** with secrets configured (for CI/CD)
+
+3. **Access to Databricks workspace** with SQL warehouse
 
 ### Local Development
 
@@ -42,14 +51,35 @@ databricks-project/
 
 3. **Run the job manually:**
    ```bash
-   databricks bundle run daily_sales_job --target dev
+   databricks bundle run employees_job --target dev
    ```
+
+## Jobs
+
+### employees_job
+
+The main job that creates the `default.employees` table with sample employee data.
+
+**Configuration:** Defined in `databricks.yml`
+
+**SQL File:** `assets/notebooks/create_employees.sql`
+
+**Table Created:** `default.employees` with columns:
+- `id` (integer)
+- `name` (string)
+- `salary` (integer)
+
+**Sample Data:**
+- alen (id: 1, salary: 10000)
+- bob (id: 2, salary: 20000)
+- charlie (id: 3, salary: 30000)
+- ell (id: 4, salary: 50000)
 
 ## CI/CD Automation
 
 ### GitHub Actions Setup
 
-The project includes automated CI/CD via GitHub Actions that:
+The project includes automated CI/CD via GitHub Actions located in `ci/github-actions.yml` that:
 
 - **On Pull Requests**: Validates the bundle configuration
 - **On Push to Main**: Validates and automatically deploys to dev environment
@@ -83,24 +113,46 @@ Configure these secrets in your GitHub repository settings:
 ## Environments
 
 - **dev**: Development environment
-- **prod**: Production environment (configure as needed)
+  - Workspace: `https://dbc-3046d6f1-8d0b.cloud.databricks.com`
+  - Root Path: `/Workspace/Users/pranathibts5117@gmail.com/bundles/notebooks_bundle`
 
-## Job Configuration
+- **prod**: Production environment (commented out in `databricks.yml`, configure as needed)
 
-The `daily_sales_job` runs a SQL query that creates a table with the current date.
+## Notebooks
 
-### Schedule
+### create_employees.sql
+Creates the `default.employees` table with sample employee data.
 
-To enable automatic scheduling, uncomment the schedule section in `databricks.yml`:
+### query.sql
+Creates the `default.date_table` with current date.
 
-```yaml
-schedule:
-  quartz_cron_expression: "0 0 6 ? * *"  # every day at 6 AM UTC
-  timezone_id: "Asia/Kolkata"
-```
+### transform_data.sql
+Creates both `default.daily_sales` and `default.date_table` tables.
+
+### create_employees_table.py
+Python notebook for creating employees table (alternative to SQL).
+
+## Dependencies
+
+Python dependencies are defined in `assets/libraries/requirements.txt`:
+- pandas
+- databricks-cli
+- pytest>=7.0.0
+- pytest-cov>=4.0.0
+- pyyaml>=6.0
+
+## Testing
+
+The `tests/` directory is available for adding test files. Currently empty and ready for test implementations.
 
 ## Troubleshooting
 
 - **Validation errors**: Run `databricks bundle validate --target dev` locally
 - **Deployment issues**: Check GitHub Actions logs for detailed error messages
 - **Job failures**: Verify SQL warehouse is running and accessible
+- **Path issues**: Ensure file paths in YAML files are relative to the project root
+
+## Additional Resources
+
+- [Databricks Asset Bundles Documentation](https://docs.databricks.com/dev-tools/bundles/index.html)
+- [Databricks CLI Documentation](https://docs.databricks.com/dev-tools/cli/index.html)

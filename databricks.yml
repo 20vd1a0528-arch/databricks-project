@@ -7,26 +7,13 @@ environments:
       host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
       root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/notebooks_bundle
 
-  prod:
-    workspace:
-      host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
-      root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/notebooks_bundle_prod
+  # prod:
+  #   workspace:
+  #     host: https://dbc-3046d6f1-8d0b.cloud.databricks.com
+  #     root_path: /Workspace/Users/pranathibts5117@gmail.com/bundles/notebooks_bundle_prod
 
 resources:
   jobs:
-    
-    # # Job 2: Creates daily_sales table
-    # daily_sales_job:
-    #   name: "Daily Sales Job"
-    #   tasks:
-    #     - task_key: create_daily_sales
-    #       sql_task:
-    #         file:
-    #           path: ./assets/notebooks/transform_data.sql
-    #         warehouse_id: "f68b5a932e3471dc"
-    
-    # Job 3: Creates employees table using SQL
-    # Using SQL task with SQL warehouse (works with serverless workspaces)
     employees_job:
       name: "Employees Table Creation Job"
       tasks:
